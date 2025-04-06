@@ -5,18 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Перегляд відео</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f0f4ff, #ffffff);
+      background-color: #f9f9f9;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Roboto', sans-serif;
       text-align: center;
-      color: #333;
+      color: #0f0f0f;
     }
     h2 {
       font-size: 2rem;
@@ -25,26 +27,34 @@
     p {
       font-size: 1rem;
       margin-bottom: 20px;
+      color: #606060;
     }
-    button {
+    .youtube-btn {
       padding: 12px 30px;
       font-size: 18px;
       font-weight: bold;
-      background-color: #0066cc;
+      background-color: #ff0000;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    button:hover {
-      background-color: #004999;
+    .youtube-btn:hover {
+      background-color: #cc0000;
+      transform: scale(1.05);
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Logo" class="logo">
   <h2>Натисни кнопку, щоб переглянути відео</h2>
   <p>Цей підхід обійде обмеження YouTube Kids</p>
-  <button onclick="window.location.href='https://www.youtube.com/watch?v=bXneT3rbpjQ'">Дивитись на YouTube</button>
+  <button class="youtube-btn" onclick="window.location.href='https://www.youtube.com/watch?v=bXneT3rbpjQ'">Дивитись на YouTube</button>
 </body>
 </html>
