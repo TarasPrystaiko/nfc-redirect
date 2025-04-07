@@ -1,60 +1,194 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Obejrzyj wideo</title>
+  <title>Wybierz wideo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    :root {
+      --bg-color: #fef6ff;
+      --text-color: #333;
+      --card-color: #fff;
+      --accent-color: #ff69b4;
+    }
+
+    body.light {
+      --bg-color: #fff6e5;
+      --text-color: #222;
+      --card-color: #ffffff;
+      --accent-color: #ffa500;
+    }
 
     body {
       margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
+      padding: 20px;
+      background: var(--bg-color) url('https://www.transparenttextures.com/patterns/stardust.png');
+      font-family: 'Fredoka One', cursive;
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: 'Roboto', sans-serif;
-      text-align: center;
-      color: #0f0f0f;
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
     }
-    h2 {
-      font-size: 2rem;
+
+    .logo {
+      width: 120px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .theme-toggle, .surprise-btn {
+      margin: 10px;
+      cursor: pointer;
+      background: var(--accent-color);
+      border: none;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .theme-toggle:hover, .surprise-btn:hover {
+      background: #ff1493;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.4rem;
+      color: var(--accent-color);
+      animation: bounce 2s infinite;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .video {
+      background: var(--card-color);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      margin: 20px;
+      padding: 20px 15px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      border: 3px dashed var(--accent-color);
+    }
+
+    .video:nth-of-type(1) { animation-delay: 0.2s; }
+    .video:nth-of-type(2) { animation-delay: 0.4s; }
+    .video:nth-of-type(3) { animation-delay: 0.6s; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    .thumbnail {
+      width: 100%;
+      border-radius: 12px;
       margin-bottom: 10px;
     }
-    p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      color: #606060;
-    }
-    .youtube-btn {
-      padding: 12px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: #ff0000;
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent-color);
       color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 17px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .youtube-btn:hover {
-      background-color: #cc0000;
+
+    .btn:hover {
       transform: scale(1.05);
+      box-shadow: 0 6px 14px rgba(255, 105, 180, 0.5);
     }
-    .logo {
-      width: 80px;
-      margin-bottom: 20px;
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: var(--card-color);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      font-size: 20px;
+    }
+
+    .modal-content span {
+      font-size: 2rem;
     }
   </style>
 </head>
 <body>
   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Logo" class="logo">
-  <h2>Kliknij przycisk, aby obejrzeć wideo</h2>
-  <p></p>
-  <button class="youtube-btn" onclick="window.location.href='https://www.youtube.com/watch?v=bXneT3rbpJQ'">Obejrzyj wideo</button>
+  <button class="theme-toggle" onclick="document.body.classList.toggle('light')">Zmień motyw</button>
+  <button class="surprise-btn" onclick="showSurprise()">🎁 Niespodzianka!</button>
+  <h1>Wybierz wideo <span aria-hidden="true">😄</span></h1>
+
+  <div class="video">
+    <img class="thumbnail" src="https://img.youtube.com/vi/YujzhGdUIFE/hqdefault.jpg" alt="Miniatura">
+    <a class="btn" href="https://www.youtube.com/watch?v=YujzhGdUIFE" target="_blank" onclick="playClickSound()">🎥 Oglądaj!</a>
+  </div>
+
+  <div class="video">
+    <img class="thumbnail" src="https://img.youtube.com/vi/ed0aLnuNw_U/hqdefault.jpg" alt="Miniatura">
+    <a class="btn" href="https://www.youtube.com/watch?v=ed0aLnuNw_U" target="_blank" onclick="playClickSound()">🎉 Zaczynamy przygodę!</a>
+  </div>
+
+  <div class="video">
+    <img class="thumbnail" src="https://img.youtube.com/vi/5owhYLlOMSI/hqdefault.jpg" alt="Miniatura">
+    <a class="btn" href="https://www.youtube.com/watch?v=5owhYLlOMSI" target="_blank" onclick="playClickSound()">🎬 Oglądaj więcej!</a>
+  </div>
+
+  <div class="modal" id="surpriseModal" onclick="this.style.display='none'">
+    <div class="modal-content">
+      🎉 Brawo! Znalazłeś ukrytą niespodziankę! <br><br><span>✨🦄✨</span>
+    </div>
+  </div>
+
+  <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_89c3d6a995.mp3?filename=button-click-124467.mp3"></audio>
+  <script>
+    function playClickSound() {
+      const audio = document.getElementById('click-sound');
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    function showSurprise() {
+      document.getElementById('surpriseModal').style.display = 'flex';
+    }
+  </script>
 </body>
 </html>
